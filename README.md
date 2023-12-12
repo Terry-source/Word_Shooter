@@ -1,4 +1,4 @@
-# Word_Shooter
+# Word Shooter
 Word Shooter Game for Kids
 
 Overview
