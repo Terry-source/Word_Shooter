@@ -224,7 +224,7 @@ class WordShooter {
       // random speed
       // const randomSpeed = Math.random() * 0.5 + 0.1;
       const speed = speedList[i];
-      //   // Update position based on random speed
+      //   // update position based on random speed
       //   synonymItem.style.left =
       //     parseFloat(synonymItem.style.left) + randomSpeed + "px";
 
@@ -233,7 +233,7 @@ class WordShooter {
         synonymItem.style.transitionTimingFunction = "ease";
       });
 
-      // Check for element reaching edge of game area and reset
+      // check for element reaching edge of game area and reset
       if (parseFloat(synonymItem.style.left) > gameBoardElement.offsetWidth) {
         synonymItem.style.left = 0;
       }
@@ -241,14 +241,14 @@ class WordShooter {
       i++;
     }
 
-    // Repeat animation loop
+    // repeat animation loop
     window.requestAnimationFrame(this.moveSynonyms.bind(this));
   }
 
   handleSynonymClick(event) {
     const clickedSynonym = event.target.textContent;
 
-    // Check if clicked synonym is correct
+    // check if clicked synonym is correct
     if (clickedSynonym in synonyms) {
       this.score++;
       event.target.remove(); // Remove clicked element
@@ -256,7 +256,7 @@ class WordShooter {
   }
 }
 
-// Start the first game
+// start the first game
 speedList = generateSpeedList(slowSpeed, fastSpeed, numberOfCombinedWords);
 
 const firstGame = new WordShooter(targetWord, numberOfCombinedWords, synonyms, antonyms);
