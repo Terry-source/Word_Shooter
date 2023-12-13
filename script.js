@@ -8,6 +8,7 @@ const resetButton = document.getElementById("reset-button");
 
 const fastSpeed = 1;
 const slowSpeed = 0.5;
+const numberOfCombinedWords = 10;
 
 /*----- state variables -----*/
 
@@ -90,16 +91,43 @@ let antonyms = [
   "ticky-tack",
   "rough-edged",
 ];
-
+// let speedList = [
+//   fastSpeed,
+//   fastSpeed,
+//   fastSpeed,
+//   fastSpeed,
+//   fastSpeed,
+//   slowSpeed,
+//   slowSpeed,
+//   slowSpeed,
+//   slowSpeed,
+//   slowSpeed,
+// ]
 /*----- functions -----*/
 
+function generateSpeedList(start, end, length) {
+  if (length < 1) {
+    return [];
+  }
+
+  const result = [];
+  const increment = (end - start) / length;
+
+  for (let i = 0; i < length; i++) {
+    result.push(i * increment + start);
+  }
+
+  return result;
+}
+
 class WordShooter {
-  constructor(targetWord, synonyms, randomWords) {
+  constructor(targetWord, numberOfCombinedWords, synonyms, randomWords) {
     this.targetWord = targetWord;
     this.synonyms = synonyms;
     this.randomWords = randomWords;
     this.score = 0;
     this.remainingTime = 20;
+    this.numberOfCombinedWords = numberOfCombinedWords;
   }
 
   startGame() {
@@ -141,30 +169,30 @@ class WordShooter {
     const combinedArray = [...this.synonyms, ...this.randomWords];
     combinedArray.sort(() => Math.random() - 0.5);
     console.log(combinedArray);
-    return combinedArray.slice(0, 10);
+    return combinedArray.slice(0, this.numberOfCombinedWords);
   }
 
-  isPositionOverlapping(newLeft, newTop, existingElements) {
-    for (const existingItem of existingElements) {
-      const existingLeft = existingItem.style.left;
-      const existingTop = existingItem.style.top;
+  // isPositionOverlapping(newLeft, newTop, existingElements) {
+  //   for (const existingItem of existingElements) {
+  //     const existingLeft = existingItem.style.left;
+  //     const existingTop = existingItem.style.top;
 
-      const existingRight = parseFloat(existingLeft) + existingItem.offsetWidth;
-      const existingBottom =
-        parseFloat(existingTop) + existingItem.offsetHeight;
+  //     const existingRight = parseFloat(existingLeft) + existingItem.offsetWidth;
+  //     const existingBottom =
+  //       parseFloat(existingTop) + existingItem.offsetHeight;
 
-      if (
-        parseFloat(newLeft) < existingRight &&
-        parseFloat(newRight) > existingLeft &&
-        parseFloat(newTop) < existingBottom &&
-        parseFloat(existingBottom) > existingTop
-      ) {
-        return true; // Overlap detected
-      }
-    }
+  //     if (
+  //       parseFloat(newLeft) < existingRight &&
+  //       parseFloat(newRight) > existingLeft &&
+  //       parseFloat(newTop) < existingBottom &&
+  //       parseFloat(existingBottom) > existingTop
+  //     ) {
+  //       return true; // Overlap detected
+  //     }
+  //   }
 
-    return false; // No overlap found
-  }
+  //   return false; // No overlap found
+  // }
 
   setTimer(resetCallback) {
     const timerInterval = setInterval(() => {
@@ -190,16 +218,18 @@ class WordShooter {
   }
 
   moveSynonyms() {
+    let i = 0;
+
     for (const synonymItem of synonymListElement.children) {
       // random speed
-      const randomSpeed = Math.random() * 0.5 + 0.1;
-
+      // const randomSpeed = Math.random() * 0.5 + 0.1;
+      const speed = speedList[i];
       //   // Update position based on random speed
       //   synonymItem.style.left =
       //     parseFloat(synonymItem.style.left) + randomSpeed + "px";
 
       requestAnimationFrame(() => {
-        synonymItem.style.left = parseFloat(synonymItem.style.left) + 1 + "px";
+        synonymItem.style.left = parseFloat(synonymItem.style.left) + 1 * speed + "px";
         synonymItem.style.transitionTimingFunction = "ease";
       });
 
@@ -207,6 +237,8 @@ class WordShooter {
       if (parseFloat(synonymItem.style.left) > gameBoardElement.offsetWidth) {
         synonymItem.style.left = 0;
       }
+
+      i++;
     }
 
     // Repeat animation loop
@@ -225,5 +257,7 @@ class WordShooter {
 }
 
 // Start the first game
-const firstGame = new WordShooter(targetWord, synonyms, antonyms);
+speedList = generateSpeedList(slowSpeed, fastSpeed, numberOfCombinedWords);
+
+const firstGame = new WordShooter(targetWord, numberOfCombinedWords, synonyms, antonyms);
 firstGame.startGame();
