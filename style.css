@@ -1,78 +1,167 @@
 body {
-    font-family: "Oxanium", sans-serif;
-    background: #0d1c1c;
-    margin: 0;
-    padding: 0;
+  font-family: "Oxanium", sans-serif;
+  background: #0d1c1c;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+  color: #ddd;
 }
 
 h1 {
-    text-align: center;
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    color: #7cffff;
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #7cffff;
 }
 
 #target-word {
-    text-align: center;
-    font-size: 2em;
-    margin: 10px 0;
-    border: 1px solid black;
-    padding: 5px;
-    width: 50%;
-    margin: 0 auto;
-    color: #6fe2e2;
-    background: #1b3838;
+  text-align: center;
+  font-size: 2em;
+  margin: 10px 0;
+  border: 1px solid black;
+  padding: 5px;
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 5%;
+  color: #6fe2e2;
+  background: #1b3838;
 }
 
 #game-board {
-    width: 100vw;
-    height: 50vh;
-    overflow: hidden;
-    position: relative;
+  width: 100vw;
+  height: 50vh;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 5%;
 }
 
 #synonym-list {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    list-style: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 #synonym-list li {
-    position: absolute;
-    font-size: 1.5em;
-    padding: 5px 10px;
-    /* border: 1px solid #ddd; */
-    border-radius: 512px;
-    /* background-color: #eee; */
-    cursor: pointer;
-    /* text-align: center; */
-    /* margin: 10px 0;
+  position: absolute;
+  font-size: 1.5em;
+  padding: 5px 10px;
+  /* border: 1px solid #ddd; */
+  border-radius: 512px;
+  /* background-color: #eee; */
+  cursor: pointer;
+  /* text-align: center; */
+  /* margin: 10px 0;
     border: 1px solid black;
     padding: 5px;
     width: 50%; */
-    /* margin: 0 auto; */
-    color: #6fe2e2;
-    background: #1b3838;
+  /* margin: 0 auto; */
+  color: #6fe2e2;
+  background: #1b3838;
+}
+
+#time-remaining {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+
+  color: #ddd;
 }
 
 #timer {
-    font-size: 1.5em;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 20px;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 1em;
+  color: #ddd;
 }
 
-#play-again-button {
-    display: block;
-    margin: 0 auto;
-    padding: 10px 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #eee;
-    cursor: pointer;
+/* #play-again-button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #eee;
+  cursor: pointer;
+} */
+
+/* From https://getcssscan.com/css-buttons-examples */
+#reset-button {
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: rgb(255, 255, 255);
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin: 0 auto;
+}
+
+#reset-button:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-button-85 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-button-85 {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+#reset-button:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #222;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
 }
