@@ -120,6 +120,27 @@ function generateSpeedList(start, end, length) {
   return result;
 }
 
+function generatePositionList(start, end, length) {
+  if (length < 1) {
+    return {};
+  }
+
+  const result = [];
+  const increment = (end - start) / length;
+
+  for (let i = 0; i < length; i++) {
+    result.push(i * increment + start);
+  }
+
+  return result;
+
+  // random positions of words
+  synonymItem.style.left = Math.random() * gameBoardElement.offsetWidth + "px";
+  synonymItem.style.top =
+    Math.round((Math.random() * gameBoardElement.offsetHeight) / 100) * 100 +
+    "px";
+}
+
 class WordShooter {
   constructor(targetWord, numberOfCombinedWords, synonyms, randomWords) {
     this.targetWord = targetWord;
@@ -151,7 +172,8 @@ class WordShooter {
       synonymItem.style.left =
         Math.random() * gameBoardElement.offsetWidth + "px";
       synonymItem.style.top =
-        Math.round((Math.random() * gameBoardElement.offsetHeight) / 12) * 12 +
+        Math.round((Math.random() * gameBoardElement.offsetHeight) / 100) *
+          100 +
         "px";
     }
 
@@ -229,7 +251,8 @@ class WordShooter {
       //     parseFloat(synonymItem.style.left) + randomSpeed + "px";
 
       requestAnimationFrame(() => {
-        synonymItem.style.left = parseFloat(synonymItem.style.left) + 1 * speed + "px";
+        synonymItem.style.left =
+          parseFloat(synonymItem.style.left) + 1 * speed + "px";
         synonymItem.style.transitionTimingFunction = "ease";
       });
 
@@ -259,5 +282,10 @@ class WordShooter {
 // start the first game
 speedList = generateSpeedList(slowSpeed, fastSpeed, numberOfCombinedWords);
 
-const firstGame = new WordShooter(targetWord, numberOfCombinedWords, synonyms, antonyms);
+const firstGame = new WordShooter(
+  targetWord,
+  numberOfCombinedWords,
+  synonyms,
+  antonyms
+);
 firstGame.startGame();
