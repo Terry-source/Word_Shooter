@@ -208,6 +208,20 @@ class WordShooter {
     alert(`Round Complete! Final score is: ${score}`);
   }
 
+  resetWin() {
+    // show reset button
+    resetButton.style.display = "block";
+    resetButton.addEventListener("click", this.playAgain.bind(this));
+
+    // stop moving words
+    window.cancelAnimationFrame(this.moveSynonyms);
+
+    // show score 
+    alert(`You found all the words! Final score is: ${score}`);
+  }
+
+
+
   playAgain() {
     score = 0;
     scoreElement.textContent = score;
@@ -254,7 +268,7 @@ class WordShooter {
       event.target.remove(); // Remove clicked element
 
       if (score == numberOfCombinedWords / 2) {
-        this.reset();
+        this.resetWin();
       }
     }
 
