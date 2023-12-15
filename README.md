@@ -14,3 +14,5 @@ Gameplay: Players can click on words as they appear. If the clicked word is a co
 Challenge: The game intensifies as words continue to move, challenging players' reaction times and synonym recognition.
 
 Play the game here https://terry-source.github.io/Word_Shooter/
+
+![image](https://github.com/Terry-source/Word_Shooter/assets/55729912/2c7d1823-eaf8-4a75-abd0-6d59e20199d9)
