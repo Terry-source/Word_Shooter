@@ -10,7 +10,7 @@ const scoreElement = document.getElementById("score");
 const fastSpeed = 1;
 const slowSpeed = 0.5;
 const numberOfCombinedWords = 14;
-
+let score = 0;
 
 /*----- state variables -----*/
 
@@ -131,7 +131,6 @@ class WordShooter {
     this.targetWord = targetWord;
     this.synonyms = synonyms;
     this.randomWords = randomWords;
-    this.score = 0;
     this.remainingTime = 20;
     this.numberOfCombinedWords = numberOfCombinedWords;
     this.PositionList = generatePositionList(); // generate initial positions and speeds
@@ -139,7 +138,7 @@ class WordShooter {
   }
 
   startGame() {
-    this.score = 0;
+    score = 0;
     this.remainingTime = 20;
 
     // show target word
@@ -178,8 +177,8 @@ class WordShooter {
 
   combineWordList() {
     const listLength = numberOfCombinedWords / 2;
-    const combinedArray = [...this.synonyms.slice(0, listLength),
-    ...this.randomWords.slice(0, listLength)];
+    const combinedArray = [...this.synonyms.sort(() => Math.random() - 0.5).slice(0, listLength),
+    ...this.randomWords.sort(() => Math.random() - 0.5).slice(0, listLength)];
     combinedArray.sort(() => Math.random() - 0.5);
     console.log(combinedArray);
     return combinedArray
@@ -205,14 +204,17 @@ class WordShooter {
     // stop moving words
     window.cancelAnimationFrame(this.moveSynonyms);
 
-    // show score
-    alert(`Round Complete! Final score is: ${this.score}`);
+    // show score 
+    alert(`Round Complete! Final score is: ${score}`);
   }
 
   playAgain() {
+    score = 0;
+    scoreElement.textContent = score;
+
     resetButton.style.display = "none";
 
-    // this.score = 0;
+
     this.remainingTime = 20;
     this.startGame();
   }
@@ -247,11 +249,11 @@ class WordShooter {
 
     // check if clicked synonym is correct
     if (synonyms.includes(clickedSynonym)) {
-      this.score++;
-      scoreElement.textContent = this.score;
+      score++;
+      scoreElement.textContent = score;
       event.target.remove(); // Remove clicked element
 
-      if (this.score == numberOfCombinedWords / 2) {
+      if (score == numberOfCombinedWords / 2) {
         this.reset();
       }
     }
