@@ -25,13 +25,11 @@ h1 {
   text-align: center;
   font-size: 2em;
   margin: 10px 0;
-  /* border: 1px solid black; */
   padding: 5px;
   width: 50%;
   margin: 0 auto;
   margin-bottom: 5%;
   color: #DF740C;
-  /* background: #1b3838; */
 }
 
 #game-board {
@@ -58,16 +56,8 @@ h1 {
   position: absolute;
   font-size: 1.5em;
   padding: 5px 10px;
-  /* border: 1px solid #ddd; */
   border-radius: 512px;
-  /* background-color: #eee; */
   cursor: pointer;
-  /* text-align: center; */
-  /* margin: 10px 0;
-    border: 1px solid black;
-    padding: 5px;
-    width: 50%; */
-  /* margin: 0 auto; */
   color: #6fe2e2;
   background: #1b3838;
 }
@@ -89,32 +79,18 @@ h1 {
 }
 
 #timer {
-  /* font-size: 1.5em; */
   font-weight: bold;
   text-align: center;
-  /* margin-top: 10px; */
   margin-bottom: 1em;
   color: #ddd;
 }
 
 #score {
-  /* font-size: 1.5em; */
   font-weight: bold;
   text-align: center;
-  /* margin-top: 10px; */
   margin-bottom: 1em;
   color: #ddd;
 }
-
-/* #play-again-button {
-  display: block;
-  margin: 0 auto;
-  padding: 10px 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #eee;
-  cursor: pointer;
-} */
 
 /* From https://getcssscan.com/css-buttons-examples */
 #reset-button {
@@ -135,18 +111,16 @@ h1 {
 
 #reset-button:before {
   content: "";
-  background: linear-gradient(
-    45deg,
-    #ff0000,
-    #ff7300,
-    #fffb00,
-    #48ff00,
-    #00ffd5,
-    #002bff,
-    #7a00ff,
-    #ff00c8,
-    #ff0000
-  );
+  background: linear-gradient(45deg,
+      #ff0000,
+      #ff7300,
+      #fffb00,
+      #48ff00,
+      #00ffd5,
+      #002bff,
+      #7a00ff,
+      #ff00c8,
+      #ff0000);
   position: absolute;
   top: -2px;
   left: -2px;
@@ -165,9 +139,11 @@ h1 {
   0% {
     background-position: 0 0;
   }
+
   50% {
     background-position: 400% 0;
   }
+
   100% {
     background-position: 0 0;
   }
