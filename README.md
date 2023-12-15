@@ -12,3 +12,5 @@ Word Shooter Interface: Below the heading, there is a dynamic interface featurin
 Gameplay: Players can click on words as they appear. If the clicked word is a correct synonym for the target word, it disappears, and the player scores points.
 
 Challenge: The game intensifies as words continue to move, challenging players' reaction times and synonym recognition.
+
+Play the game here https://terry-source.github.io/Word_Shooter/
