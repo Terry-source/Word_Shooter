@@ -3,12 +3,13 @@ const targetWordElement = document.getElementById("target-word");
 const synonymListElement = document.getElementById("synonym-list");
 const gameBoardElement = document.getElementById("game-board");
 const resetButton = document.getElementById("reset-button");
+const scoreElement = document.getElementById("score");
 
 /*----- constants -----*/
 
 const fastSpeed = 1;
 const slowSpeed = 0.5;
-const numberOfCombinedWords = 40;
+const numberOfCombinedWords = 14;
 
 
 /*----- state variables -----*/
@@ -119,8 +120,8 @@ function generateList(start, end, length) {
 function generatePositionList() {
   const result = {
     speed: generateList(slowSpeed, fastSpeed, numberOfCombinedWords, fastSpeed - slowSpeed),
-    topoffset: generateList(0, 1, numberOfCombinedWords, 1 / numberOfCombinedWords),
-    leftoffset: generateList(0, 1, numberOfCombinedWords, 1 / numberOfCombinedWords),
+    topoffset: generateList(0.01, 0.35, numberOfCombinedWords, 0.05),
+    leftoffset: generateList(0, 0.9, numberOfCombinedWords, 0.05),
   };
   return result;
 }
@@ -131,13 +132,16 @@ class WordShooter {
     this.synonyms = synonyms;
     this.randomWords = randomWords;
     this.score = 0;
-    this.remainingTime = 3;
+    this.remainingTime = 20;
     this.numberOfCombinedWords = numberOfCombinedWords;
     this.PositionList = generatePositionList(); // generate initial positions and speeds
     this.moveSynonyms = this.moveSynonyms.bind(this);
   }
 
   startGame() {
+    this.score = 0;
+    this.remainingTime = 20;
+
     // show target word
     targetWordElement.textContent = this.targetWord;
 
@@ -173,10 +177,12 @@ class WordShooter {
   }
 
   combineWordList() {
-    const combinedArray = [...this.synonyms, ...this.randomWords];
+    const listLength = numberOfCombinedWords / 2;
+    const combinedArray = [...this.synonyms.slice(0, listLength),
+    ...this.randomWords.slice(0, listLength)];
     combinedArray.sort(() => Math.random() - 0.5);
     console.log(combinedArray);
-    return combinedArray.slice(0, this.numberOfCombinedWords);
+    return combinedArray
   }
 
   setTimer(resetCallback) {
@@ -200,18 +206,15 @@ class WordShooter {
     window.cancelAnimationFrame(this.moveSynonyms);
 
     // show score
-    // alert(`Round Complete! Final score is: ${this.score}`);
+    alert(`Round Complete! Final score is: ${this.score}`);
   }
 
   playAgain() {
     resetButton.style.display = "none";
-    const nextGame = new WordShooter(
-      targetWord,
-      numberOfCombinedWords,
-      synonyms,
-      antonyms
-    );
-    nextGame.startGame();
+
+    // this.score = 0;
+    this.remainingTime = 20;
+    this.startGame();
   }
 
   moveSynonyms() {
@@ -243,10 +246,18 @@ class WordShooter {
     const clickedSynonym = event.target.textContent;
 
     // check if clicked synonym is correct
-    if (clickedSynonym in synonyms) {
+    if (synonyms.includes(clickedSynonym)) {
       this.score++;
+      scoreElement.textContent = this.score;
       event.target.remove(); // Remove clicked element
+
+      if (this.score == numberOfCombinedWords / 2) {
+        this.reset();
+      }
     }
+
+    // this.score++;
+    // scoreElement.textContent = this.score + event.target.textContent;
   }
 }
 
