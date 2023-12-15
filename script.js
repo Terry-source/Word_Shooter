@@ -220,14 +220,11 @@ class WordShooter {
     alert(`You found all the words! Final score is: ${score}`);
   }
 
-
-
   playAgain() {
     score = 0;
     scoreElement.textContent = score;
 
     resetButton.style.display = "none";
-
 
     this.remainingTime = 20;
     this.startGame();
@@ -271,14 +268,10 @@ class WordShooter {
         this.resetWin();
       }
     }
-
-    // this.score++;
-    // scoreElement.textContent = this.score + event.target.textContent;
   }
 }
 
 // start the first game
-// speedList = generateList(slowSpeed, fastSpeed, numberOfCombinedWords);
 
 const firstGame = new WordShooter(
   targetWord,
