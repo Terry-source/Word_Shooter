@@ -15,22 +15,23 @@ body {
 
 h1 {
   text-align: center;
-  font-size: 1.5em;
-  margin-bottom: 10px;
-  color: #7cffff;
+  font-size: 2em;
+  margin-bottom: 0.5em;
+  margin-top: 2em;
+  color: #ddd;
 }
 
 #target-word {
   text-align: center;
   font-size: 2em;
   margin: 10px 0;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   padding: 5px;
   width: 50%;
   margin: 0 auto;
   margin-bottom: 5%;
-  color: #6fe2e2;
-  background: #1b3838;
+  color: #DF740C;
+  /* background: #1b3838; */
 }
 
 #game-board {
@@ -39,6 +40,7 @@ h1 {
   overflow: hidden;
   position: relative;
   margin-bottom: 5%;
+  background: #0C141F;
 }
 
 #synonym-list {

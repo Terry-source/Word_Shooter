@@ -8,7 +8,8 @@ const resetButton = document.getElementById("reset-button");
 
 const fastSpeed = 1;
 const slowSpeed = 0.5;
-const numberOfCombinedWords = 10;
+const numberOfCombinedWords = 40;
+
 
 /*----- state variables -----*/
 
@@ -91,21 +92,10 @@ let antonyms = [
   "ticky-tack",
   "rough-edged",
 ];
-// let speedList = [
-//   fastSpeed,
-//   fastSpeed,
-//   fastSpeed,
-//   fastSpeed,
-//   fastSpeed,
-//   slowSpeed,
-//   slowSpeed,
-//   slowSpeed,
-//   slowSpeed,
-//   slowSpeed,
-// ]
 /*----- functions -----*/
 
-function generateSpeedList(start, end, length) {
+
+function generateList(start, end, length) {
   if (length < 1) {
     return [];
   }
@@ -117,28 +107,22 @@ function generateSpeedList(start, end, length) {
     result.push(i * increment + start);
   }
 
+  // randomiser
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+
   return result;
 }
 
-function generatePositionList(start, end, length) {
-  if (length < 1) {
-    return {};
-  }
-
-  const result = [];
-  const increment = (end - start) / length;
-
-  for (let i = 0; i < length; i++) {
-    result.push(i * increment + start);
-  }
-
+function generatePositionList() {
+  const result = {
+    speed: generateList(slowSpeed, fastSpeed, numberOfCombinedWords, fastSpeed - slowSpeed),
+    topoffset: generateList(0, 1, numberOfCombinedWords, 1 / numberOfCombinedWords),
+    leftoffset: generateList(0, 1, numberOfCombinedWords, 1 / numberOfCombinedWords),
+  };
   return result;
-
-  // random positions of words
-  synonymItem.style.left = Math.random() * gameBoardElement.offsetWidth + "px";
-  synonymItem.style.top =
-    Math.round((Math.random() * gameBoardElement.offsetHeight) / 100) * 100 +
-    "px";
 }
 
 class WordShooter {
@@ -147,8 +131,10 @@ class WordShooter {
     this.synonyms = synonyms;
     this.randomWords = randomWords;
     this.score = 0;
-    this.remainingTime = 20;
+    this.remainingTime = 3;
     this.numberOfCombinedWords = numberOfCombinedWords;
+    this.PositionList = generatePositionList(); // generate initial positions and speeds
+    this.moveSynonyms = this.moveSynonyms.bind(this);
   }
 
   startGame() {
@@ -159,8 +145,9 @@ class WordShooter {
     this.combinedList = this.combineWordList();
 
     // create word list
+
     synonymListElement.innerHTML = "";
-    for (const synonym of this.combinedList) {
+    for (const [index, synonym] of this.combinedList.entries()) {
       const synonymItem = document.createElement("li");
       synonymItem.textContent = synonym;
       synonymListElement.appendChild(synonymItem);
@@ -170,11 +157,9 @@ class WordShooter {
 
       // random positions of words
       synonymItem.style.left =
-        Math.random() * gameBoardElement.offsetWidth + "px";
+        this.PositionList['leftoffset'][index] * gameBoardElement.offsetWidth + "px";
       synonymItem.style.top =
-        Math.round((Math.random() * gameBoardElement.offsetHeight) / 100) *
-          100 +
-        "px";
+        this.PositionList['topoffset'][index] * gameBoardElement.offsetWidth + "px";
     }
 
     // move words
@@ -194,28 +179,6 @@ class WordShooter {
     return combinedArray.slice(0, this.numberOfCombinedWords);
   }
 
-  // isPositionOverlapping(newLeft, newTop, existingElements) {
-  //   for (const existingItem of existingElements) {
-  //     const existingLeft = existingItem.style.left;
-  //     const existingTop = existingItem.style.top;
-
-  //     const existingRight = parseFloat(existingLeft) + existingItem.offsetWidth;
-  //     const existingBottom =
-  //       parseFloat(existingTop) + existingItem.offsetHeight;
-
-  //     if (
-  //       parseFloat(newLeft) < existingRight &&
-  //       parseFloat(newRight) > existingLeft &&
-  //       parseFloat(newTop) < existingBottom &&
-  //       parseFloat(existingBottom) > existingTop
-  //     ) {
-  //       return true; // Overlap detected
-  //     }
-  //   }
-
-  //   return false; // No overlap found
-  // }
-
   setTimer(resetCallback) {
     const timerInterval = setInterval(() => {
       if (this.remainingTime > 0) {
@@ -230,25 +193,33 @@ class WordShooter {
 
   reset() {
     // show reset button
-    document.getElementById("reset-button").style.display = "block";
+    resetButton.style.display = "block";
+    resetButton.addEventListener("click", this.playAgain.bind(this));
 
     // stop moving words
-    window.cancelAnimationFrame(moveSynonyms);
+    window.cancelAnimationFrame(this.moveSynonyms);
 
     // show score
-    alert(`Round Complete! Final score is: ${this.score}`);
+    // alert(`Round Complete! Final score is: ${this.score}`);
+  }
+
+  playAgain() {
+    resetButton.style.display = "none";
+    const nextGame = new WordShooter(
+      targetWord,
+      numberOfCombinedWords,
+      synonyms,
+      antonyms
+    );
+    nextGame.startGame();
   }
 
   moveSynonyms() {
     let i = 0;
 
-    for (const synonymItem of synonymListElement.children) {
+    for (const [index, synonymItem] of Array.from(synonymListElement.children).entries()) {
       // random speed
-      // const randomSpeed = Math.random() * 0.5 + 0.1;
-      const speed = speedList[i];
-      //   // update position based on random speed
-      //   synonymItem.style.left =
-      //     parseFloat(synonymItem.style.left) + randomSpeed + "px";
+      const speed = this.PositionList['speed'][index];
 
       requestAnimationFrame(() => {
         synonymItem.style.left =
@@ -280,7 +251,7 @@ class WordShooter {
 }
 
 // start the first game
-speedList = generateSpeedList(slowSpeed, fastSpeed, numberOfCombinedWords);
+// speedList = generateList(slowSpeed, fastSpeed, numberOfCombinedWords);
 
 const firstGame = new WordShooter(
   targetWord,
