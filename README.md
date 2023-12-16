@@ -2,6 +2,7 @@
 Word Shooter Game for Kids
 
 Overview
+
 Welcome to the Word Shooter Game, designed to make learning synonyms an engaging experience for all. The game presents a fun and interactive way for everyone to enhance their vocabulary skills.
 
 How it Works
